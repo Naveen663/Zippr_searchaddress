@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -31,9 +30,6 @@ import com.zippr.searchaddress.R;
 import com.zippr.searchaddress.fragments.CustomMapFragment;
 import com.zippr.searchaddress.utils.Common;
 import com.zippr.searchaddress.utils.PermissionUtils;
-
-import static com.zippr.searchaddress.activities.CommonActivity.MIN_DISTANCE;
-import static com.zippr.searchaddress.activities.CommonActivity.MIN_TIME;
 
 /**
  * Created by user on 06-05-2018.
@@ -63,7 +59,7 @@ public class MapActivity extends CommonActivity implements OnMapReadyCallback, G
 
     private static final String DATABASE_NAME = "myDb.db";
     private static final String DATABASE_TABLENAME = "ZIPPR";
-    private static final String DATABASE_CREATE_TABLE ="create table if not exists ZIPPR (_id integer primary key autoincrement,place text not null)";
+    private static final String DATABASE_CREATE_TABLE = "create table if not exists ZIPPR (_id integer primary key autoincrement,place text not null)";
 
     String place;
 
@@ -96,7 +92,6 @@ public class MapActivity extends CommonActivity implements OnMapReadyCallback, G
         }
 
 
-
     }
 
     private void initViews() {
@@ -126,15 +121,15 @@ public class MapActivity extends CommonActivity implements OnMapReadyCallback, G
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.btn_selectLocation:
 
                 place = edt_place.getText().toString().trim();
 
-                if(TextUtils.isEmpty(place)){
-                    Toast.makeText(MapActivity.this,"Please enter place",Toast.LENGTH_SHORT).show();
-                }else{
+                if (TextUtils.isEmpty(place)) {
+                    Toast.makeText(MapActivity.this, "Please enter place", Toast.LENGTH_SHORT).show();
+                } else {
                     addToDB();
                 }
 
@@ -156,7 +151,7 @@ public class MapActivity extends CommonActivity implements OnMapReadyCallback, G
         myDB.insert(DATABASE_TABLENAME, null, newRow);
 
 
-        Toast.makeText(getApplicationContext(), "New Row Added to DB Successfully with Place : "+place, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "New Row Added to DB Successfully with Place : " + place, Toast.LENGTH_LONG).show();
 
     }
 
@@ -244,13 +239,9 @@ public class MapActivity extends CommonActivity implements OnMapReadyCallback, G
         currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 
-
         if (currentLocation == null) {
             currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
-
-        /*currentLocation.setLatitude(dbl_vehl_lat);
-        currentLocation.setLongitude(dbl_vehl_lng);*/
 
         moveCameraToCurrentLocation(currentLocation);
 
@@ -269,9 +260,7 @@ public class MapActivity extends CommonActivity implements OnMapReadyCallback, G
         if (mMap == null || location == null) {
             return;
         }
-        //if (bookingDetails == null) {
-        //previousZoomLevel = 17.0f;
-        //}
+
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, previousZoomLevel);
         mMap.animateCamera(cameraUpdate);
